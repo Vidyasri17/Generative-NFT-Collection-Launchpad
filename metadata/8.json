@@ -1,0 +1,15 @@
+{
+  "name": "Generative NFT #8",
+  "description": "A unique generative NFT part of the Launchpad collection.",
+  "image": "ipfs://REPLACE_WITH_IMAGE_CID/8.svg",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Hue 288"
+    },
+    {
+      "trait_type": "ID",
+      "value": "8"
+    }
+  ]
+}
