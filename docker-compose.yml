@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  hardhat-node:
+    build:
+      context: .
+      target: contracts
+      dockerfile: Dockerfile
+    container_name: nft-launchpad-hardhat
+    ports:
+      - "8545:8545"
+    volumes:
+      - ./contracts:/app/contracts
+      - ./scripts:/app/scripts
+      - ./test:/app/test
+      - ./artifacts:/app/artifacts
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8545"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - nft-launchpad
+
+  frontend:
+    build:
+      context: .
+      target: frontend
+      dockerfile: Dockerfile
+    container_name: nft-launchpad-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_CONTRACT_ADDRESS=${NEXT_PUBLIC_CONTRACT_ADDRESS:-0x}
+      - NEXT_PUBLIC_RPC_URL=http://hardhat-node:8545
+      - NEXT_PUBLIC_CHAIN_ID=31337
+    depends_on:
+      hardhat-node:
+        condition: service_healthy
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      - nft-launchpad
+
+networks:
+  nft-launchpad:
+    driver: bridge
