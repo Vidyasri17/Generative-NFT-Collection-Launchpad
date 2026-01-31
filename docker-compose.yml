@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   hardhat-node:
     build:
@@ -15,7 +13,7 @@ services:
       - ./test:/app/test
       - ./artifacts:/app/artifacts
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8545"]
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:8545"]
       interval: 10s
       timeout: 5s
       retries: 5

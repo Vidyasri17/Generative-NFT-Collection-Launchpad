@@ -1,6 +1,6 @@
 # Multi-stage Dockerfile for NFT Launchpad
 # Stage 1: Contracts (Hardhat)
-FROM node:18-alpine AS contracts
+FROM node:20-alpine AS contracts
 
 WORKDIR /app
 
@@ -27,7 +27,7 @@ EXPOSE 8545
 CMD ["npx", "hardhat", "node"]
 
 # Stage 2: Frontend (Next.js)
-FROM node:18-alpine AS frontend
+FROM node:20-alpine AS frontend
 
 WORKDIR /app
 
@@ -50,7 +50,7 @@ EXPOSE 3000
 CMD ["npm", "run", "dev"]
 
 # Stage 3: Development stage (all tools)
-FROM node:18-alpine AS development
+FROM node:20-alpine AS development
 
 WORKDIR /app
 
